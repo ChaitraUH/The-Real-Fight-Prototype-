@@ -1,0 +1,1423 @@
+<!DOCTYPE HTML>
+<html>
+
+
+<style>
+	  
+	   
+	   body, html {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+   }
+   
+   #progress-outerp1 {
+   background-color: black;
+      border-radius: 13px; /* (height of inner div) / 2 + padding */
+      padding: 3px;
+	  width: 25%;
+     
+	}
+
+	#progress-innerp1 {
+    background-color: red;
+       width: 78%; /* Adjust with JavaScript */
+       height: 10px;
+       border-radius: 10px;
+	 
+    
+	}
+	
+	 #progress-outerp2 {
+   background-color: black;
+      border-radius: 13px; /* (height of inner div) / 2 + padding */
+      padding: 3px;
+	  width: 25%;
+     
+	}
+
+	#progress-innerp2 {
+    background-color:#20B2AA;
+       width: 78%; /* Adjust with JavaScript */
+       height: 10px;
+       border-radius: 10px;
+	 
+    
+	}
+</style>
+
+  <head>
+
+    <meta name="viewport" content="width=320; user-scalable=no" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+
+    <title>Phonegap - BluetoothPlugin Sample</title>
+
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <script type="text/javascript" charset="utf-8" src="Bluetooth.js"></script>
+    <script src="modernizr-2.0.6.js"></script>
+    <link rel="stylesheet" type="text/css" href="index.css">
+   
+    <img id="bkimg" class="bkimgcls" src="newimage.jpg" onload="this.width=window.innerWidth;this.height=window.innerHeight" style="position: absolute; top: 0; left: 0px; z-index: 0; border: 0px solid #0ff;visibility:hidden" >
+    
+<img id="p1lmovimg"  src="left.png"  style="position: absolute; left:55px; top:265px;z-index: 0; border: 0px solid #0ff;visibility:hidden" >
+
+<img id="p1lpunchimg"  src="leftpunch.png"  style="position: absolute; left:188px; top:265px;z-index: 0; border: 0px solid #0ff;visibility:hidden" >
+
+<img id="p1rpunchimg" src="rightpunch.png"    style="position: absolute; left:316px; top:265px ;z-index: 0; border: 0px solid #0ff;visibility:hidden" >
+
+<img id="defence" src="defence.png"   style="position: absolute; left:450px; top:265px; z-index: 0; border: 0px solid #0ff;visibility:hidden" >
+
+<img id="p1rmovimg" src="right.png"   style="position: absolute; left:450px; top:265px; z-index: 0; border: 0px solid #0ff;visibility:hidden" >
+
+
+<img  id="player1" src="b33.gif"   style="position: absolute;left:54px;top:32px;z-index: 0; width:100px;height:100px;border: 0px solid #0ff;visibility:hidden" >
+
+<img  id="player2" src="b333.gif"   style="position: absolute;z-index: 0;left:444px;top:32px; width:100px;height:100px;border: 0px solid #0ff;visibility:hidden" >
+
+<img  id="player1lpimg" src="b1.gif"   style="position: absolute;z-index: 0; width:100px;height:100px;border: 0px solid #0ff; visibility:hidden" >
+
+<img  id="player1rpimg" src="b2.gif"   style="position: absolute;z-index: 0; width:100px;height:100px;border: 0px solid #0ff; visibility:hidden" >
+
+<img  id="player2lpimg" src="b2222.gif"   style="position: absolute;z-index: 0; width:100px;height:100px;border: 0px solid #0ff; visibility:hidden" >
+
+<img  id="player2rpimg" src="b1111.gif"   style="position: absolute;z-index: 0; width:100px;height:100px;border: 0px solid #0ff; visibility:hidden" >
+
+<img  id="player1initimg" src="b33.gif"   style="position: absolute;z-index: 0;left:54px;top:28px; width:100px;height:100px;border: 0px solid #0ff;visibility:hidden" >
+<img  id="p11lpimg" src="b11.gif"   style="position: absolute;z-index: 0; width:100px;height:100px;border: 0px solid #0ff; display:none" >
+
+<img  id="p11rpimg" src="b22.gif"   style="position: absolute;z-index: 0; width:100px;height:100px;border: 0px solid #0ff; display:none" >
+<img  id="boxerinit" src="b33.gif"   style="position: absolute;z-index: 0;;left:54px;top:28px; width:100px;border: 0px solid #0ff;display:none" >
+<img  id="boxer1init" src="b333.gif"   style="position: absolute;z-index: 0;;left:54px;top:28px; width:100px;border: 0px solid #0ff;display:none" >
+<img  id="boxer2init" src="b3333.gif"   style="position: absolute;z-index: 0;;left:54px;top:28px; width:100px;border: 0px solid #0ff;display:none" >
+<img  id="boxer3init" src="b3.gif"   style="position: absolute;z-index: 0;;left:54px;top:28px; width:100px;border: 0px solid #0ff;display:none" >
+<img  id="punch1" src="b222.gif"   style="position: absolute;z-index: 0; width:100px;height:100px;border: 0px solid #0ff; display:none" >
+<img  id="punch2" src="b2222.gif"   style="position: absolute;z-index: 0; width:100px;height:100px;border: 0px solid #0ff; display:none" >
+<img  id="punch3" src="b111.gif"   style="position: absolute;z-index: 0; width:100px;height:100px;border: 0px solid #0ff; display:none" >
+<img  id="punch4" src="b1111.gif"   style="position: absolute;z-index: 0; width:100px;height:100px;border: 0px solid #0ff; display:none" >
+<img  id="g11" src="g11.gif"   style="position: absolute;z-index: 0; width:100px;height:100px;border: 0px solid #0ff; display:none" >
+<img  id="g12" src="g12.gif"   style="position: absolute;z-index: 0; width:100px;height:100px;border: 0px solid #0ff; display:none" >
+<img  id="g21" src="g21.gif"   style="position: absolute;z-index: 0; width:100px;height:100px;border: 0px solid #0ff; display:none" >
+<img  id="g22" src="g22.gif"   style="position: absolute;z-index: 0; width:100px;height:100px;border: 0px solid #0ff; display:none" >
+  </head>
+
+  <body onload="onload();">
+  <canvas id="game"  style = "border:1px solid #000000;"></canvas><!--HTML5 BODY ELEMENT-CANVAS DECLARATION-->
+    <div id="page-content">
+      
+     
+      
+      <div>
+        Enable or disable Bluetooth : 
+        <input type="button" id="enable-disable-button" value="Off" onclick="toggleEnableDisable(this)" />
+        
+       <b> SELECT : </b>
+         <input type="button" id="send-message-button" value="host" onclick="host();" />
+         
+       <b>  OR </b>
+             
+             <input type="button" id="send-message-button" value="client" onclick="client();" />
+        <div>
+          Get Bonded (Paired) Devices : 
+          <input type="button" id="bonded-devices-button" value="Bonded Devices" onclick="bondedDevices();" />
+          <br />
+          Bonded Devices : 
+          <select id="bonded-device-list"></select> 
+          <div>
+            Get UUIDs of selected device : 
+            <input type="button" id="fetch-uuids-button" value="Fetch UUIDs" onclick="fetchUUIDs();" /> 
+            <br />
+            UUIDs : 
+            <select id="uuid-list"></select>
+          </div>
+            <div>
+          Listen as named <b id="listening-name"></b>, for UUID=<b id="listening-uuid"></b> : 
+          <input type="checkbox" id="secure-listen-check">Secure</input>
+          <input type="button" id="listen-button" value="Listen" onclick="toggleListen(this);" />
+          <br />
+         
+        </div>
+          <div>
+          	 Will connect to UUID=<b id="connecting-uuid"></b> : 
+             <input type="checkbox" id="secure-connect-check">Secure</input>
+             <input type="button" id="connect-button" value="Connect" onclick="connect();" />
+             <input type="button" id="disconnect-button" value="Disconnect" onclick="disconnect();" />
+             <br /></b>
+            
+            
+           </div>
+        </div>
+        
+      
+
+      </div> <!-- Enable Disable Bluetooth -->
+       
+    </div> <!-- page context -->
+     
+  <!--********************CSS3 CODE SEGMENT ENDS***************************-->	   
+        
+	
+    
+		
+	
+  <!--********************JAVASCRIPT CODE SEGMENT************************/-->      
+   
+   
+   <script>
+    var canvas = document.getElementById("game");
+	 var c= canvas.getContext("2d");
+	 var cw=screen.width,ch=screen.height;
+     var wr=cw/1366,hr=ch/677,x1,y1;
+     c.canvas.width=0;
+     c.canvas.height=0;
+     var x1=0,y1=0,x=0,y=0;
+	 var socketId = -1;
+     var bluetoothPugin = null;
+     var backgroundimg=document.getElementById('bkimg');
+	var p1lmovimgvar=document.getElementById('p1lmovimg');
+	var p1lpunchimgvar=document.getElementById('p1lpunchimg');
+	var p1rpunchimgvar=document.getElementById('p1rpunchimg');
+	var p1rmovimgvar=document.getElementById('p1rmovimg');
+	var boxer1=document.getElementById('player1');
+	var boxer2=document.getElementById('player2');
+	var em1=document.getElementById('label1');
+	var em2=document.getElementById('label2');
+	var x1=((window.innerWidth*105)/598);
+	var x2=((window.innerWidth*385)/598);
+	var p1lpimg=document.getElementById('player1lpimg');
+	var p1rpimg=document.getElementById('player1rpimg');
+	var player1init=document.getElementById('player1initimg');
+    var hbarp1=document.getElementById('healthbarfirstplayer1');
+    var hbarp2=document.getElementById('healthbarsecondplayer2');
+	var boxerinit=document.getElementById('boxerinit');
+	var boxer1init=document.getElementById('boxer1init');
+	var boxer2init=document.getElementById('boxer2init');
+	var boxer3init=document.getElementById('boxer3init');
+	var punch1=document.getElementById('punch1');
+	var punch2=document.getElementById('punch2');
+	var punch3=document.getElementById('punch3');
+	var punch4=document.getElementById('punch4');
+	var guard11=document.getElementById('g11');
+	var guard12=document.getElementById('g12');
+	var guard21=document.getElementById('g21');
+	var guard22=document.getElementById('g22');
+	var p1defencevar=document.getElementById('defence');
+	
+	var em1y;
+	var em2y;
+	var flag1p1="a";
+	var flag2p1="b";
+	var flag3p1="c";
+	var flag4p1="d";
+	var flag1p2="e";
+	var flag2p2="f";
+	var flag3p2="g";
+	var flag4p2="h";
+	var player1lps="i";//player1leftpunchstart
+	var player1lpe="j";//player1leftpunchend
+	var player1rps="k";//player2leftpunchstart
+	var player1rpe="l";//player2leftpunchend
+	var player2lps="m";
+	var player2lpe="n";
+	var player2rps="o";
+	var player2rpe="p";
+	var player1ds="q";
+	var player1de="r";
+	var player2ds="s";
+	var player2de="t";
+
+var listeningName = "BluetoothPlugin"
+var listeningUUID = "e7babb53-0160-4192-a2b6-2ccb1e9aae67"
+
+
+	
+
+	 //INITIALIZATION
+	
+	 
+	 //BEGINNING OF HOST
+	 function host(){
+		
+		var htmlCanvas = document.getElementById('game');
+		var ctx = htmlCanvas.getContext('2d');
+		var progressouterbarp1=document.getElementById('progress-outerp1');
+		var progressinnerbarp1=document.getElementById('progress-innerp1');
+		var progressouterbarp2=document.getElementById('progress-outerp2');
+		var progressinnerbarp2=document.getElementById('progress-innerp2');
+   
+	c.canvas.width=window.innerWidth;
+	c.canvas.height=window.innerHeight;
+	
+	 
+	
+	
+	backgroundimg.style.visibility="visible";
+	
+	
+	//healthbarp1.style.visibility="visible";
+	//healthbarp2.style.visibility="visible";
+	//hbarp1.style.visibility="visible";
+	//hbarp2.style.visibility="visible";
+	
+	
+	
+	
+	
+	
+    p1lmovimgvar.style.left=((window.innerWidth*50)/598)+"px";
+	p1lmovimgvar.style.top=((window.innerHeight*265)/335)+"px";
+	p1lmovimgvar.style.visibility="visible";
+	
+	p1lpunchimgvar.style.left=((window.innerWidth*148)/598)+"px";
+	p1lpunchimgvar.style.top=((window.innerHeight*265)/335)+"px";
+	p1lpunchimgvar.style.visibility="visible";
+	
+	
+	p1defencevar.style.left=((window.innerWidth*268)/598)+"px";
+	p1defencevar.style.top=((window.innerHeight*265)/335)+"px";
+	p1defencevar.style.visibility="visible";
+	
+	p1rpunchimgvar.style.left=((window.innerWidth*356)/598)+"px";
+	p1rpunchimgvar.style.top=((window.innerHeight*265)/335)+"px";
+	p1rpunchimgvar.style.visibility="visible";
+	
+	p1rmovimgvar.style.left=((window.innerWidth*455)/598)+"px";
+	p1rmovimgvar.style.top=((window.innerHeight*265)/335)+"px";
+	p1rmovimgvar.style.visibility="visible";
+	
+	
+	boxer1.style.left=x1+"px";
+	boxer1.style.top=((window.innerHeight*36)/265)+"px";
+	boxer1.style.visibility="visible";
+	
+	boxer2.style.left=x2+"px";
+	boxer2.style.top=((window.innerHeight*36)/265)+"px";
+	boxer2.style.visibility="visible";
+	
+	
+	 progressouterbarp1.style.visibility="visible";
+	 progressinnerbarp1.style.visibility="visible";
+	 progressouterbarp1.style.left=((window.innerWidth*35)/598)+"px";
+	 progressouterbarp1.style.top=((window.innerHeight*15)/335)+"px";
+	
+	progressouterbarp2.style.visibility="visible";
+	progressinnerbarp2.style.visibility="visible";
+	progressouterbarp2.style.left=((window.innerWidth*410)/598)+"px";
+	progressouterbarp2.style.top=((window.innerHeight*15)/335)+"px";
+	
+	
+	 em1y=98;
+	 progressinnerbarp1.style.width=em1y+"%";
+	 em2y=98;
+	 progressinnerbarp2.style.width=em2y+"%";
+	
+	
+	p1lmovimgvar.addEventListener('touchstart', function(e){
+	
+	
+
+	  
+		
+			 sendMessage(flag1p1);
+		     player1leftmovement();
+	},false)
+	
+	p1rmovimgvar.addEventListener('touchstart', function(e){
+	
+		//if(x1<((window.innerWidth*370)/598)){
+			sendMessage(flag4p1);
+		   player1rightmovement();
+		//}
+	},false)
+	
+	p1lpunchimgvar.addEventListener('touchstart', function(e){
+	
+	  sendMessage(player1lps);
+	  player1leftpunchstart();
+	  
+	  
+		
+	 },false)	
+	 
+	 	p1rpunchimgvar.addEventListener('touchstart', function(e){
+		sendMessage(player1rps);
+		player1rightpunchstart();
+		
+	},false)
+	
+	
+	p1rpunchimgvar.addEventListener('touchend', function(e){
+	
+		//alert("mouseUp");
+		
+		sendMessage(player1rpe);
+		player1rightpunchend();
+		
+	},false)
+	p1lpunchimgvar.addEventListener('touchend', function(e){
+	 
+	  sendMessage(player1lpe);
+	  player1leftpunchend();
+		
+	 },false)	
+	p1defencevar.addEventListener('touchstart', function(e){
+		player1defencestart();
+	},false)
+	p1defencevar.addEventListener('touchend', function(e){
+		player1defenceend();
+	},false)
+	
+
+	
+}//END OF HOST
+	 
+	 //BEGINNING OF CLIENT
+	  
+	  function client(){
+		
+		c.canvas.width=window.innerWidth;
+		c.canvas.height=window.innerHeight;
+		
+    //var hbarp1=document.getElementById('healthbarfirstplayer1');
+    //var hbarp2=document.getElementById('healthbarsecondplayer2');
+	
+	
+	backgroundimg.style.visibility="visible";
+	
+	
+	//healthbarp1.style.visibility="visible";
+	//healthbarp2.style.visibility="visible";
+	//hbarp1.style.visibility="visible";
+	//hbarp2.style.visibility="visible";
+	
+	
+	
+	
+	
+	
+    p1lmovimgvar.style.left=((window.innerWidth*55)/598)+"px";
+	p1lmovimgvar.style.top=((window.innerHeight*265)/335)+"px";
+	p1lmovimgvar.style.visibility="visible";
+	
+	p1lpunchimgvar.style.left=((window.innerWidth*188)/598)+"px";
+	p1lpunchimgvar.style.top=((window.innerHeight*265)/335)+"px";
+	p1lpunchimgvar.style.visibility="visible";
+	
+	p1defencevar.style.left=((window.innerWidth*268)/598)+"px";
+	p1defencevar.style.top=((window.innerHeight*265)/335)+"px";
+	p1defencevar.style.visibility="visible";
+	
+	p1rpunchimgvar.style.left=((window.innerWidth*316)/598)+"px";
+	p1rpunchimgvar.style.top=((window.innerHeight*265)/335)+"px";
+	p1rpunchimgvar.style.visibility="visible";
+	
+	p1rmovimgvar.style.left=((window.innerWidth*450)/598)+"px";
+	p1rmovimgvar.style.top=((window.innerHeight*265)/335)+"px";
+	p1rmovimgvar.style.visibility="visible";
+	
+	
+	
+	
+	
+		 
+         p1lmovimgvar.addEventListener('touchstart', function(e){
+	
+		//if(x2>(window.innerWidth*110)/598){
+		    
+		  
+		  sendMessage(flag1p2);
+			player2leftmovement();
+			
+			
+			
+		//}
+		
+	},false)
+	
+	
+	p1rmovimgvar.addEventListener('touchstart', function(e){
+	
+	
+	    
+		
+			sendMessage(flag4p2);
+		   player2rightmovement();
+		
+		
+	},false)
+	p1lpunchimgvar.addEventListener('touchstart', function(e){
+	
+	  sendMessage(player2lps);
+	  player2leftpunchstart();
+	  
+	  
+		
+	 },false)	
+	 
+	 	p1rpunchimgvar.addEventListener('touchstart', function(e){	
+		sendMessage(player2rps);
+		player2rightpunchstart();
+		
+	},false)
+	
+	
+	p1rpunchimgvar.addEventListener('touchend', function(e){
+	
+		//alert("mouseUp");
+		
+		sendMessage(player2rpe);
+		player2rightpunchend();
+		
+	},false)
+	p1lpunchimgvar.addEventListener('touchend', function(e){
+	 
+	  sendMessage(player2lpe);
+	  player2leftpunchend();
+		
+	 },false)	
+	 p1defencevar.addEventListener('touchstart', function(e){
+		sendMessage(player2ds);
+		player2defencestart();
+	 
+	 },false)
+	 p1defencevar.addEventListener('touchend', function(e){
+		sendMessage(player2de);
+		player2defenceend();
+	 
+	 },false)
+	
+	
+	 }//end of client
+	  
+	  
+function player1leftmovement()
+{
+	if(x1>(window.innerWidth*105)/598){
+		x1=x1-10;
+		boxer1.style.left=x1+"px";
+		if(isCollide())
+			{
+				/*//alert("Collide");
+				if(boxer1.src.indexOf('b33.gif')>-1)
+				{
+					alert("worng");
+				       boxer1.src=boxer3init.src;
+					   boxer2.src=boxer2init.src;
+				}*/
+			 if(boxer1.src.indexOf('b3.gif')>-1)
+				{
+				       boxer1.src=boxerinit.src;
+					   boxer2.src=boxer1init.src;
+				}
+				
+			}
+	}
+}
+
+function player1rightmovement()
+{
+	if(x1<(window.innerWidth*385)/598){
+		x1=x1+10;
+		boxer1.style.left=x1+"px";
+		if(isCollide())
+			{
+				//alert("Collide");
+				if(boxer1.src.indexOf('b33.gif')>-1)
+				{
+				       boxer1.src=boxer3init.src;
+					   boxer2.src=boxer2init.src;
+					  // alert("found1");
+				}
+				else if(boxer1.src.indexOf('b3.gif')>-1)
+				{
+				       boxer1.src=boxerinit.src;
+					   boxer2.src=boxer1init.src;
+				}
+				
+			}
+	}
+}
+
+function player2leftmovement()
+{
+	if(x2>((window.innerWidth*105)/598)){
+		x2=x2-10;
+		boxer2.style.left=x2+"px";
+	
+	if(isCollide())
+		{
+				//alert("Collide");
+				if(boxer2.src.indexOf('b3333.gif')>-1)
+				{
+					 
+				       boxer1.src=boxerinit.src;
+					   boxer2.src=boxer1init.src;
+					   
+				}
+			    /* if(boxer2.src.indexOf('b333.gif')>-1)
+				{
+				       boxer1.src=boxer3init.src;
+					   boxer2.src=boxer2init.src;
+					    alert("found2");
+				}*/
+				
+		}
+	}
+}
+
+function player2rightmovement()
+{
+	if(x2<((window.innerWidth*385)/598)){
+		x2=x2+10;
+		boxer2.style.left=x2+"px";
+		if(isCollide())
+			{
+				//alert("Collide");
+				if(boxer2.src.indexOf('b3333.gif')>-1)
+				{
+					  
+				       boxer1.src=boxerinit.src;
+					   boxer2.src=boxer1init.src;
+				}
+				 else if(boxer2.src.indexOf('b333.gif')>-1)
+				{
+				       boxer1.src=boxer3init.src;
+					   boxer2.src=boxer2init.src;
+					   //alert("found3");
+				}
+				
+			}
+    }
+}
+function player1leftpunchstart()
+{
+	var m1;
+		var m2;
+		var m3;
+		var progressinnerbarp2=document.getElementById('progress-innerp2');
+	   if(boxer1.src.indexOf('b33.gif')>-1){
+			boxer1.src=p1lpimg.src;
+		}
+	   else if(boxer1.src.indexOf('b3.gif')>-1){
+	       boxer1.src=p11lpimg.src;
+		}
+		if(boxer1.src.indexOf('b1.gif')>-1 && boxer2.src.indexOf('g21.gif')<=-1)
+		{   
+			//alert("b1");
+		   m1=(x1 +100);
+		   m2=(x2+100/2)-15;
+		   m3=(x2+100/2)+15;
+		   if(  m1>m2 && m1<m3 )
+		   { 
+		      //alert("shoot");
+		      em2y=em2y-5;
+			  if(em2y<=0)
+			  {
+				  alert("GAME OVER : PLAYER1 WINS");
+			  }
+			  progressinnerbarp2.style.width=em2y+"%";
+		   }
+		}
+		if(boxer1.src.indexOf('b11.gif')>-1 && boxer2.src.indexOf('g22.gif')<=-1)
+		{   
+			//alert("b11");
+		   m1=x1;
+		   m2=(x2+100/2)-15;
+		   m3=(x2+100/2)+15;
+		   if(  m1>m2 && m1<m3 )
+		   { 
+				//alert("shoot");
+		      em2y=em2y-5;
+			  if(em2y<=0)
+			  {
+				  alert("GAME OVER : PLAYER1 WINS");
+			  }
+			  progressinnerbarp2.style.width=em2y+"%";
+		   }
+		}
+}
+function  player1leftpunchend(){
+	if(boxer1.src.indexOf('b1.gif')>-1){
+			boxer1.src=boxerinit.src;
+		}
+		else if(boxer1.src.indexOf('b11.gif')>-1){
+			boxer1.src=boxer3init.src;
+		}
+
+}
+function player1rightpunchstart(){
+	var m1;
+		var m2;
+		var m3;
+		var progressinnerbarp2=document.getElementById('progress-innerp2');
+	   if(boxer1.src.indexOf('b33.gif')>-1){
+			boxer1.src=p1rpimg.src;
+		}
+	   else if(boxer1.src.indexOf('b3.gif')>-1){
+	       boxer1.src=p11rpimg.src;
+		}
+		if(boxer1.src.indexOf('b2.gif')>-1 && boxer2.src.indexOf('g21.gif')<=-1)
+		{   
+		   m1=(x1 + 100);
+		   m2=(x2+100/2)-15;
+		   m3=( x2+100/2)+15;
+		   if(  m1>m2 && m1<m3 )
+		   { 
+		      em2y=em2y-5;
+			  if(em2y<=0)
+			  {
+				  alert("GAME OVER : PLAYER1 WINS");
+			  }
+			   progressinnerbarp2.style.width=em2y+"%";
+		   }
+		}
+		if(boxer1.src.indexOf('b22.gif')>-1 && boxer2.src.indexOf('g22.gif')<=-1) 
+		{   
+		   m1=x1;
+		   m2=(x2+100/2)-15;
+		   m3=( x2+100/2)+15;
+		   if(  m1>m2 && m1<m3 )
+		   { 
+		      em2y=em2y-5;
+			  if(em2y<=0)
+			  {
+				  alert("GAME OVER : PLAYER1 WINS");
+			  }
+			  progressinnerbarp2.style.width=em2y+"%";
+		   }
+		}
+}
+function player1rightpunchend(){
+	if(boxer1.src.indexOf('b2.gif')>-1){
+			boxer1.src=boxerinit.src;
+		}
+		else if(boxer1.src.indexOf('b22.gif')>-1){
+			boxer1.src=boxer3init.src;
+		}
+}
+ function player2leftpunchstart(){
+	 var m1;
+			var m2;
+			var m3;
+			var progressinnerbarp1=document.getElementById('progress-innerp1');
+	  if(boxer2.src.indexOf('b3333.gif')>-1)
+	  { boxer2.src= punch1.src;}
+	 else
+	  {  boxer2.src= punch2.src;}
+	   if(boxer2.src.indexOf('b222.gif')>-1 && boxer1.src.indexOf('g12.gif')<=-1)
+		{   
+		   m1=(x2 + 100);
+		   m2=(x1+100/2)-15;
+		   m3=(x1+100/2)+15;
+		   if(  m1>m2 && m1<m3 )
+		   { 
+		      em1y=em1y-5;
+			  if(em1y<=0)
+			  {
+				  alert("GAME OVER : PLAYER2 WINS");
+			  }
+			  progressinnerbarp1.style.width=em1y+"%";
+		   }
+		}
+		if(boxer2.src.indexOf('b2222.gif')>-1 && boxer1.src.indexOf('g11.gif')<=-1)
+		{   
+		   m1=x2;
+		   m2=(x1+100/2)-15;
+		   m3=( x1+100/2)+15;
+		   if(  m1>m2 && m1<m3 )
+		   { 
+		      em1y=em1y-5;
+			  if(em1y<=0)
+			  {
+				  alert("GAME OVER : PLAYER2 WINS");
+			  }
+			  progressinnerbarp1.style.width=em1y+"%";
+		   }
+		}
+ }
+ function player2leftpunchend(){
+	if(boxer2.src.indexOf('b222.gif')>-1){
+						boxer2.src=boxer2init.src;
+	}
+	else if(boxer2.src.indexOf('b2222.gif')>-1){
+						boxer2.src=boxer1init.src;
+	}
+}
+function player2rightpunchstart(){
+			var m1;
+	 var m2;
+	 var m3;
+	 var progressinnerbarp1=document.getElementById('progress-innerp1');
+	  if(boxer2.src.indexOf('b3333.gif')>-1)
+	  { boxer2.src= punch3.src;}
+	 else
+	  {  boxer2.src= punch4.src;}
+	   if(boxer2.src.indexOf('b111.gif')>-1 && boxer1.src.indexOf('g12.gif')<=-1)
+		{   
+		   m1=(x2 + 100);
+		   m2=(x1+100/2)-15;
+		   m3=( x1+100/2)+15;
+		   if(  m1>m2 && m1<m3 )
+		   { 
+		      em1y=em1y-5;
+			  if(em1y<=0)
+			  {
+				  alert("GAME OVER : PLAYER2 WINS");
+			  }
+			  progressinnerbarp1.style.width=em1y+"%";
+		   }
+		}
+		if(boxer2.src.indexOf('b1111.gif')>-1 && boxer1.src.indexOf('g11.gif')<=-1)
+		{   
+		   m1=x2;
+		   m2=(x1+100/2)-20;
+		   m3=( x1+100/2)+20;
+		   if(  m1>m2 && m1<m3 )
+		   { 
+		      em1y=em1y-5;
+			  if(em1y<=0)
+			  {
+				  alert("GAME OVER : PLAYER2 WINS");
+			  }
+			  progressinnerbarp1.style.width=em1y+"%";
+		   }
+		}
+	
+}
+function player2rightpunchend(){
+				if(boxer2.src.indexOf('b111.gif')>-1){
+						boxer2.src=boxer2init.src;
+				}
+			   else if(boxer2.src.indexOf('b1111.gif')>-1){
+						boxer2.src=boxer1init.src;
+			    }
+}
+function player1defencestart(){
+		if(boxer1.src.indexOf('b33.gif')>-1){
+			boxer1.src=guard11.src;
+		}
+		else if(boxer1.src.indexOf('b3.gif')>-1){
+			boxer1.src=guard12.src;
+		}
+}
+function player1defenceend(){
+		if(boxer1.src.indexOf('g11.gif')>-1){
+			boxer1.src=boxerinit.src;
+		}
+		else if(boxer1.src.indexOf('g12.gif')>-1){
+			boxer1.src=boxer3init.src;
+		}
+}
+function player2defencestart(){
+		if(boxer2.src.indexOf('b3333.gif')>-1){
+			boxer2.src=guard22.src;
+		}
+		else if(boxer2.src.indexOf('b333.gif')>-1){
+			boxer2.src=guard21.src;
+		}
+}
+function player2defenceend(){
+		if(boxer1.src.indexOf('g22.gif')>-1){
+			boxer1.src=boxer2init.src;
+		}
+		else if(boxer1.src.indexOf('g21.gif')>-1){
+			boxer1.src=boxer1init.src;
+		}
+
+}
+
+
+
+
+
+
+
+function isCollide() {
+		var b1=document.getElementById('player1');
+		var b2=document.getElementById('player2');
+		var x11=b1.style.left;
+		var x22=b2.style.left;
+		
+        if(b1.src.indexOf('b33.gif')>-1)
+        {
+		    //alert("match");
+			if((x11 + b1.style.width) < ( x22+b1.style.width)) 
+			{
+				return(0);
+			}
+			
+			return(1);
+		}
+		else if( b2.src.indexOf('b3333.gif')>-1)
+		{
+			 //alert("match");
+			if((x11+ b1.style.width) > (x22+b2.style.width)) 
+			{
+				return(0);
+			}
+			
+			return(1);
+		}
+   
+}
+	  
+function toggleListen(item) {
+   var test=false;
+  if(item.value == "Listen") {
+    item.disabled = true;
+    if (bluetoothPugin) {
+      bluetoothPugin.listen(
+        function(sockId){
+          item.disabled = false;
+          item.value = "Cancel";
+		 
+          //document.getElementById("listen-textarea").value = "Connected socket:" + sockId + "\n";
+          bluetoothPugin.read(
+      			function( p_data ) {
+      				var str = "";
+					
+      				for ( var i = 0; i < p_data.length; i++) {
+						str += String.fromCharCode(p_data[i]);
+						
+					}
+					
+					
+					//alert(str);
+					if(str[0]=='a')
+					{
+						 player1leftmovement();
+						 //alert("correct1");
+					}
+					
+					if(str[0]=='d')
+					{
+						  player1rightmovement();
+						 // alert("correct2");
+					}
+					
+					if(str[0]=='e')
+					{
+						  player2leftmovement();
+						  //alert("correct3");
+					}
+					
+					if(str[0]=='h')
+					{
+						  player2rightmovement();
+						 //alert("correct4");
+					}
+					if(str[0]=='i')
+					{
+						  player1leftpunchstart();
+						 //alert("correct4");
+					}
+					if(str[0]=='j')
+					{
+						  player1leftpunchend();
+						 //alert("correct4");
+					}
+					if(str[0]=='k')
+					{
+						  player1rightpunchstart();
+						 //alert("correct4");
+					}
+					if(str[0]=='l')
+					{
+						 player1rightpunchend();
+						 //alert("correct4");
+					}
+					if(str[0]=='m')
+					{
+						  player2leftpunchstart();
+						 //alert("correct4");
+					}
+					if(str[0]=='n')
+					{
+						  player2leftpunchend();
+						 //alert("correct4");
+					}
+					if(str[0]=='o')
+					{
+						  player2rightpunchstart();
+						 //alert("correct4");
+					}
+					if(str[0]=='p')
+					{
+						 player2rightpunchend();
+						 //alert("correct4");
+					}
+					if(str[0]=='s')
+					{
+						 player2defencestart();
+					}
+					if(str[0]=='t')
+					{
+						 player2defenceend();
+					}
+					
+      			//alert(""+str);
+				 // x2=x2-10;
+	             //boxer2.style.left=x2+"px";
+					
+					 
+					 
+					 
+      			},
+      			function( error ) {
+      				//document.getElementById("listen-textarea").value += "Error : >" + error + "<\n";
+      			}, 
+      			sockId);
+        },
+        function(error){
+          item.disabled = false;
+          item.value = "Listen";
+          //document.getElementById("listen-textare").value = "Error while listening : " + error + "\n";
+        },
+        listeningName,
+        listeningUUID,
+        document.getElementById("secure-listen-check").checked
+      );
+    }
+  } else {
+    item.disabled = true;
+    if (bluetoothPugin) {
+      bluetoothPugin.cancelListening(
+        function(){
+          item.disabled = false;
+          item.value = "Listen";
+          alert("Listening Canceled");
+        },
+        function(error){
+          item.disabled = false;
+          item.value = "Cancel";
+          alert("Error while cancel the listening : " + error)
+        }
+      );
+    }
+  }
+  
+}
+
+function sendMessage(x1) {
+	
+	if ( ! bluetoothPugin)
+	    return;
+	
+	if (socketId < 0)
+		  return;
+	
+	var d = ""+x1;
+	var arr = new Array();
+	for (var i=0; i<d.length; ++i) {
+		arr[i] = d.charCodeAt(i);
+	}
+	var newLine = "\n";
+	arr[arr.length] = newLine.charCodeAt(0);
+	
+
+	bluetoothPugin.write(
+			function() {
+				//alert("Successfully Sent");
+			}, function(error) {
+				alert( 'Error: ' + error + ', for : ' + arr );
+			},
+			socketId,
+			arr
+	);
+}
+
+
+
+function onload() {
+
+  if (navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/)) {
+    document.addEventListener("deviceready", onDeviceReady, false);
+  } else {
+    // onDeviceReady();
+  }
+  
+  disableBluetoothRelatedInputs(true);
+  document.getElementById("listening-name").innerHTML = listeningName;
+  document.getElementById("listening-uuid").innerHTML = listeningUUID;
+  document.getElementById("connecting-uuid").innerHTML = listeningUUID;
+  
+}
+
+
+
+function onDeviceReady() {
+
+	bluetoothPugin = cordova.require( 'cordova/plugin/bluetooth' );
+	bluetoothPugin.isSupported(
+		function(supported) {
+			if ( ! supported) {
+			  document.open();
+			  document.writeln("Bluetooth is not supported on your platform !");
+			  document.close();
+			  document.getElementById("enable-disable-button").disabled = true;
+			  document.getElementById("request-discoverable-button").disabled = true;
+			  disableBluetoothRelatedInputs(true);
+		  }
+		  else {
+		    bluetoothPugin.isEnabled(
+		      function(enabled) {
+			      if (enabled) {
+			        document.getElementById("enable-disable-button").value = "Off";
+			        disableBluetoothRelatedInputs(false);
+		        }
+		        else {
+			        document.getElementById("enable-disable-button").value = "On";
+			        disableBluetoothRelatedInputs(true);
+		        }
+		      },
+		      function() {
+			      alert("Error while bluetooth enabled checking !");
+			      disableBluetoothRelatedInputs(true);
+		      });
+		  }
+		},
+		function() {
+			alert("Error while bluetooth support checking !");
+      document.getElementById("page-content").disabled = true;
+      disableBluetoothRelatedInputs(true);
+		});
+}
+
+
+
+
+function requestDiscoverable(duration) {
+
+  if ( ! bluetoothPugin)
+    return;
+
+	bluetoothPugin.requestDiscoverable(
+		function(duration) {
+      document.getElementById("enable-disable-button").value = "Off";
+      disableBluetoothRelatedInputs(false);
+			alert("Visible duration is " + duration + " seconds.");
+		},
+		function(error) {
+			alert("Error : " + error);
+		},
+		duration /*seconds*/
+	);
+			
+}
+
+
+
+
+
+function toggleEnableDisable(item) {
+
+  if(item.value == "Off") {
+    item.disabled = true;
+    if (bluetoothPugin) {
+	    bluetoothPugin.disable( function() {
+	      item.disabled = false;
+        item.value = "On";
+        disableBluetoothRelatedInputs(true);
+		    alert( 'Disabling successfull' );
+	    }, function() {
+	      item.disabled = false;
+        item.value = "Off";
+        disableBluetoothRelatedInputs(false);
+		    alert( 'Error disabling BT: ' + error );
+	    } );
+    }
+  } else { /* On */
+    item.disabled = true;
+    if (bluetoothPugin) {
+	    bluetoothPugin.enable( function() {
+	      item.disabled = false;
+        item.value = "Off";
+        disableBluetoothRelatedInputs(false);
+		    alert( 'Enabling successfull' );
+	    }, function() {
+	      item.disabled = false;
+        item.value = "On";
+        disableBluetoothRelatedInputs(true);
+		    alert( 'Error enabling BT: ' + error );
+	    } );
+    }
+  }
+  
+}
+
+
+
+
+function getAddress() {
+
+  if ( ! bluetoothPugin)
+    return;
+
+	bluetoothPugin.getAddress(
+		function(address) {
+			alert("Address is : " + address);
+		},
+		function(error) {
+			alert("Error : " + error);
+	});
+			
+}
+
+
+
+
+
+function getName() {
+
+  if ( ! bluetoothPugin)
+    return;
+
+	bluetoothPugin.getName(
+		function(name) {
+			alert("Name is : " + name);
+		},
+		function(error) {
+			alert("Error : " + error);
+	});
+	
+}
+
+
+
+
+function toggleDiscovery(item) {
+  
+  if(item.value == "Cancel") {
+    if (bluetoothPugin) {
+      bluetoothPugin.cancelDiscovery(
+        function() {
+          item.value = "Discovery";
+        },
+        function() {
+          item.value = "Cancel";
+          alert("Discovery can not canceled");
+        }
+      );
+    }
+  } else { /* Discovery */
+    item.value = "Cancel";
+    if (bluetoothPugin) {
+      bluetoothPugin.startDiscovery( 
+        function(devices) {
+          item.value = "Discovery";
+          var select = document.getElementById("discovered-device-list");
+          select.options.length = 0; /*clear*/
+          for (var i = 0; i < devices.length; i++) {
+            var text = devices[i].name + (devices[i].isBonded ?" (Bonded)":" (NotBonded)");
+            var value = devices[i].address;
+            select.options.add(new Option(text, value));
+          }
+          if (devices.length == 0) {
+            alert("Can not find any device !");
+          }
+          else {
+            alert("Found device count : " + devices.length);
+          }
+        }, 
+        function(error) {
+          item.value = "Discovery";
+          alert( 'Error: ' + error ); 
+        }
+      );
+    }
+  }
+}
+
+
+
+
+function bondedDevices() {
+
+  if ( ! bluetoothPugin)
+    return;
+
+  bluetoothPugin.getBondedDevices(
+    function(devices) {
+      var select = document.getElementById("bonded-device-list");
+      select.options.length = 0; /*clear*/
+      for (var i = 0; i < devices.length; i++) {
+        var text = devices[i].name + (devices[i].isBonded ?" (Bonded)":" (NotBonded)");
+        var value = devices[i].address;
+        select.options.add(new Option(text, value));
+      }
+      if (devices.length == 0) {
+        disableBondRelatedInputs(true);
+        alert("Can not find any device !");
+      }
+      else {
+        disableBondRelatedInputs(false);
+        alert("Found device count : " + devices.length);
+      }
+    },
+    function(error) {
+      alert( 'Error: ' + error );
+    }
+  );
+}
+
+
+
+
+function fetchUUIDs() {
+
+  var bondedDeviceList = document.getElementById("bonded-device-list");
+
+  if (bondedDeviceList.options.length <= 0)
+    return;
+
+  if ( ! bluetoothPugin)
+    return;
+    
+	bluetoothPugin.fetchUUIDs(
+	  function(uuids) {
+        var select = document.getElementById("uuid-list");
+        select.options.length = 0; /*clear*/
+        for (var i = 0; i < uuids.length; i++) {
+          var text = uuids[i];
+          var value = uuids[i];
+          select.options.add(new Option(text, value));
+        }
+        if (uuids.length == 0) {
+          disableUUIDRelatedInputs(true);
+          alert("Can not find any device !");
+        }
+        else {
+          disableUUIDRelatedInputs(false);
+          alert("Found device count : " + uuids.length);
+        }
+      },
+      function(error) { 
+        alert( 'Error: ' + error ); 
+      },
+      bondedDeviceList.options[bondedDeviceList.selectedIndex].value
+    );
+}
+
+function disableConnectionRelatedInputs(disable) {
+	document.getElementById("message-text").disabled = disable;
+	document.getElementById("send-message-button").disabled = disable;
+}
+
+
+
+function disableUUIDRelatedInputs(disable) {
+
+  if (disable)
+	  disableConnectionRelatedInputs(true);
+}
+
+
+function disableBondRelatedInputs(disable) {
+
+  document.getElementById("fetch-uuids-button").disabled = disable;
+  document.getElementById("uuid-list").disabled = disable;
+  document.getElementById("connect-button").disabled = disable;
+  if (disable)
+    document.getElementById("disconnect-button").disabled = disable;
+  document.getElementById("secure-connect-check").disabled = disable;
+  if (disable)
+    disableUUIDRelatedInputs(true);
+  
+}
+
+
+function disableBluetoothRelatedInputs(disable) {
+
+  document.getElementById("address-button").disabled = disable;
+  document.getElementById("name-button").disabled = disable;
+  document.getElementById("discovery-button").disabled = disable;
+  document.getElementById("discovered-device-list").disabled = disable;
+  document.getElementById("bonded-devices-button").disabled = disable;
+  document.getElementById("bonded-device-list").disabled = disable;
+  if (disable)
+    disableBondRelatedInputs(true);
+  document.getElementById("listen-button").disabled = disable;
+  document.getElementById("secure-listen-check").disabled = disable;
+  document.getElementById("listen-textarea").disabled = disable;
+}
+
+
+
+
+
+function connect() {
+
+  if ( ! bluetoothPugin)
+    return;
+    
+  if (socketId >= 0)
+    return;
+
+  var bondedDeviceList = document.getElementById("bonded-device-list");
+  var secureCheck = document.getElementById("secure-connect-check");
+
+  bluetoothPugin.connect(
+    function(sockId) {
+      socketId = sockId; 
+      document.getElementById("disconnect-button").disabled = false;
+      console.log( 'Socket-id: ' + socketId );
+      disableConnectionRelatedInputs(false);
+      alert("Connected, Socket-id:" + socketId);
+    }, 
+    function(error) {
+      document.getElementById("disconnect-button").disabled = true;
+      disableConnectionRelatedInputs(true);
+      alert( 'Error: ' + error );
+    }, 
+    bondedDeviceList.options[bondedDeviceList.selectedIndex].value,
+    listeningUUID,
+    secureCheck.checked
+  );
+
+}
+
+
+
+
+
+
+function disconnect() {
+
+  if ( ! bluetoothPugin)
+    return;
+    
+  if (socketId < 0)
+  return;
+  
+  bluetoothPugin.disconnect(
+    function(){
+      alert("Disconnected");
+      socketId = -1;
+      disableConnectionRelatedInputs(true);
+    },
+    function(error){
+      alert("Error while disconnecting : " + error)
+    },
+    socketId
+  );
+
+}
+
+
+
+
+
+
+	
+  </script>
+  </body>
+  <div id="progress-outerp1" style="z-index:2; position:absolute;visibility:hidden;">
+    <div id="progress-innerp1" style="visibility:hidden;"></div>
+</div>
+
+<div id="progress-outerp2" style="z-index:2; position:absolute;visibility:hidden;">
+    <div id="progress-innerp2" style="visibility:hidden;"></div>
+</div>
+</html>
